@@ -1,12 +1,12 @@
 <?php
 
-class PDOFactory
-{
-  public static function getMysqlConnection()
+  class PDOFactory
   {
-    $db = new PDO('mysql:host=localhost;dbname=blogmiss', 'root', '');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public static function getMysqlConnection()
+    {
+      $db = new PDO('mysql:host=localhost;dbname=blog', 'root', 'root');
+      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    return $db;
+      return $db;
+    }
   }
-}

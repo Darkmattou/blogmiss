@@ -26,7 +26,7 @@
       echo '<td>' . $client->getVille() . '</td>';
       echo '<td><a href="./index.php?action=formEditClient&id=' . $client->getId() . '"">Editer</a></td>';
       echo '<td><a href="./index.php?action=deleteClient&id=' . $client->getId() . '">Supprimer</a></td>';
-      echo '</tr>';  
+      echo '</tr>';
     }
     ?>
   </tbody>

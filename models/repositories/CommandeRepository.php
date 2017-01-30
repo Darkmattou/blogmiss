@@ -1,40 +1,35 @@
-<?php 
+<?php
 
-class CommandeRepository
-{
+  class CommandeRepository
+  {
 
-	//Récupère la liste de tous les clients en base de données
-	public function getAll($pdo) {
+    public function getAll($pdo){
 
-		//Effectuer la requête en bdd pour récupérer l'ensemble des clients enregistrés en bdd
-		$resultats = $pdo->query('SELECT p.nom, p.prenom, cp.com_id, cp.prd_id, cp.quantite, c.client_id, c.ref FROM personne p INNER JOIN commande c ON p.id = c.client_id INNER JOIN commande_produit cp ON c.id = cp.com_id');
+      $req = $pdo->query("SELECT p.nom, p.prenom, cmd.id, cmd.ref, cmd.date_expedition, cmd.date_cmd, s.libelle
+      FROM personne p INNER JOIN commande cmd ON p.id=cmd.client_id INNER JOIN statut s ON cmd.statut_id=s.id ORDER BY p.nom, p.prenom");
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
+      $req->setFetchMode(PDO::FETCH_OBJ);
 
-		//Boucler sur tous les enregistrements récupérés grâce à votre requête SELECT
-		//et pour chaque enregistrement :
-		// 1 -  instancier un objet client
-		// 2 -  hydrater ses attributs avec les valeurs récupérées en bdd
-		// 3 - pour chaque objet client instanciés et hydratés, les ajouter dans un tableau
-		// 4 - retourner ensuite ce tableau avec l'instruction return
 
-		$listeCommande = array();
+      $listCommande = array();
 
-		while($obj = $resultats->fetch()){	
+      while ($obj = $req->fetch()){
 
-			$commande = new Client();
-			$commande->setNom($obj->nom);
-			$commande->setPrenom($obj->prenom);
-			$commande->setCom($obj->com_id);
-			$commande->setPrd($obj->prd_id);
-			$commande->setQuantite($obj->quandtite);
-			$commande->setClientid($obj->client_id);
-			$commande->setRef($obj->ref);
+        $commande = new Commande();
+        $commande->setId($obj->id);
+        $commande->setReference($obj->reference);
+        $commande->setNom($obj->nom);
+        $commande->setPrenom($obj->prenom);
+        $commande->setDateCommande($obj->date_cmd);
+        $commande->setDateExpedition($obj->date_expedition);
+        $commande->setStatut($obj->libelle);
 
-			$listeCommande[] = $commande;
+        $listCommande[] = $commande;
 
-		}
 
-		return $listeCommande;
-	}
+      }
 
+        return $listCommande;
+
+    }
+  }
