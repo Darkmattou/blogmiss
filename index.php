@@ -55,6 +55,8 @@ switch ($action) {
 		$vueAAfficher = "views/listClient.php";
 		break;
 
+	case "listCommande"
+		
 	//Affiche le formulaire d'ajout d'un client
 	case "formAddClient": 
 		//On prépare la vue à afficher
